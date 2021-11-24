@@ -1,0 +1,15 @@
+{
+    "name": "user/tide",
+    "autoload": {
+        "psr-4": {
+            "User\\Tide\\": "src/"
+        }
+    },
+    "require": {
+        "claviska/simpleimage": "^3.6"
+    },"autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}
