@@ -24,5 +24,28 @@ class Person extends Db {
         $data = $stmt->fetchAll();
         return $data;
     }
+
+    public function addPerson($person) {
+        $sql = "
+        INSERT INTO persons (
+            firstname, 
+            nickname, 
+            dob, 
+            gender_id, 
+            club_id, 
+            salary
+        ) VALUES (
+            :firstname, 
+            :nickname, 
+            :dob, 
+            :gender_id, 
+            :club_id, 
+            :salary
+        )
+        ";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($person);
+        return $this->pdo->lastInsertId();
+    }
 }
 ?>
