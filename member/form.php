@@ -1,7 +1,23 @@
+
 <?php require $_SERVER["DOCUMENT_ROOT"]."/tide/vendor/autoload.php"; ?>
 <?php 
+use app\Model\Person;
 use app\Model\Club;
 use app\Model\Ref;
+
+$person['firstname']="";
+$person['nickname']="";
+$person['dob']="";
+$person['gender_id']="";
+$person['club_id']="";
+$person['salary']="";
+
+if($_REQUEST['action']=='edit') {
+    $personObj = new Person;
+    $person = $personObj->getPersonById($_REQUEST['id']);
+} 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,25 +36,26 @@ use app\Model\Ref;
                 <div class="col">
                     <div class="card mb-3">
                         <div class="card-header bg-primary text-white d-flex justify-content-between">
-                            <h4>ระบบข้อมูลสมาชิก  CRUD</h4>
+                            <h4>แบบฟอร์ม <?php echo ($_REQUEST['action']=='edit') ? "แก้ไขข้อมูลสมาชิก":"เพิ่มสมาชิกใหม่" ?></h4>
                             <a href="index.php" class="btn btn-success">ย้อนกลับ</a>
                         </div>
                         <div class="card-body">
                             <form action="save.php" method="get">
+                                <input type="hidden" name="action" value="<?php echo ($_REQUEST['action']=='edit') ? "edit":"add"; ?>">
+                                <input type="hidden" name="id" value="<?php echo $person['id'];?>">
                                 <div class="form-group">
-                                    <label for="firstname">ชื่อจริง
-                                    </label>
-                                   <input type="text" name="firstname" id="firstname" class="from-control">
+                                    <label for="firstname">ชื่อจริง</label>
+                                   <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo $person['firstname']; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="nickname">ชื่อเล่น
                                     </label>
-                                   <input type="text" name="nickname" id="nickname" class="from-control">
+                                   <input type="text" name="nickname" id="nickname" class="form-control" value="<?php echo $person['nickname']; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="dob">วันเกิด
                                     </label>
-                                   <input type="text" name="dob" id="dob" class="from-control">
+                                   <input type="text" name="dob" id="dob" class="form-control" value="<?php echo $person['dob']; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="gender">เพศ
@@ -49,7 +66,8 @@ use app\Model\Ref;
                                         $refObj = new Ref;
                                         $genders = $refObj->getRefsByGroupId(2);
                                         foreach($genders as $gender) {
-                                            echo "<option value='{$gender['id']}'>{$gender['title']}</option>";
+                                            $selected = ($gender['id']==$person['gender_id']) ? "selected" : "";
+                                            echo "<option value='{$gender['id']}' {$selected}>{$gender['title']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -63,7 +81,8 @@ use app\Model\Ref;
                                         $clubObj = new Club;
                                         $clubs = $clubObj->getAllClubs();
                                         foreach($clubs as $club) {
-                                            echo "<option value='{$club['id']}'>{$club['title']}</option>";
+                                            $selected = ($club['id']==$person['club_id']) ? "selected" : "";
+                                            echo "<option value='{$club['id']}' {$selected}>{$club['title']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -71,7 +90,7 @@ use app\Model\Ref;
                                 <div class="form-group">
                                     <label for="salary">เงินเดือน
                                     </label>
-                                   <input type="text" name="salary" id="salary" class="from-control">
+                                   <input type="text" name="salary" id="salary" class="form-control" value="<?php echo $person['salary']; ?>">
                                 </div>
                                 <button class="vtn btn-success" type="submit">บันทึก</button>
                             </form>

@@ -17,7 +17,7 @@
                     <div class="card mb-3">
                         <div class="card-header bg-primary text-white d-flex justify-content-between">
                             <h4>ระบบข้อมูลสมาชิก  CRUD</h4>
-                            <a href="form.php" class="btn btn-success">เพิ่มสมาชิกใหม่</a>
+                            <a href="form.php?action=add" class="btn btn-success">เพิ่มสมาชิกใหม่</a>
                         </div>
                         <div class="card-body">
                             <table class="table">
@@ -30,6 +30,7 @@
                                         <th>Gender_id</th>
                                         <th>Club_id</th>
                                         <TH>Salary</TH>
+                                        <th>จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -51,6 +52,8 @@
                                                 <td>{$person['gender']}</td>
                                                 <td>{$person['club']}</td>
                                                 <td>{$person['salary']}</td>
+                                                <td><a href='form.php?id={$person['id']}&action=edit' class='mr-2 btn btn-info'>แก้ไข</td>
+                                                <td><a href='save.php?id={$person['id']}&action=delete' class='btn btn-danger'>ลบ</td>
                                             </tr>";
                                         }
                                     ?>
