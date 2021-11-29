@@ -27,7 +27,11 @@ if($_REQUEST['action']=='edit') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบข้อมูลสมาชิก</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <style>
+        .avatar {
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
     <body class="font-mali">
@@ -40,7 +44,7 @@ if($_REQUEST['action']=='edit') {
                             <a href="index.php" class="btn btn-success">ย้อนกลับ</a>
                         </div>
                         <div class="card-body">
-                            <form action="save.php" method="get">
+                            <form action="save.php" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="action" value="<?php echo ($_REQUEST['action']=='edit') ? "edit":"add"; ?>">
                                 <input type="hidden" name="id" value="<?php echo $person['id'];?>">
                                 <div class="form-group">
@@ -91,6 +95,13 @@ if($_REQUEST['action']=='edit') {
                                     <label for="salary">เงินเดือน
                                     </label>
                                    <input type="text" name="salary" id="salary" class="form-control" value="<?php echo $person['salary']; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="upload">รูปภาพ
+                                    </label>
+                                   <input type="file" name="upload" id="upload" class="form-control">
+                                   <input type="hidden" name="avatar" id="avatar" value="<?php echo $person['avatar']; ?>">
+                                   <img src="<?php echo $person['avatar']; ?>" class = "avatar" >
                                 </div>
                                 <button class="vtn btn-success" type="submit">บันทึก</button>
                             </form>

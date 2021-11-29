@@ -48,6 +48,7 @@ class Person extends Db {
             persons.nickname,
             persons.dob,
             persons.salary,
+            persons.avatar,
             refs.title as gender,
             clubs.title as club
         FROM persons 
@@ -74,14 +75,18 @@ class Person extends Db {
             dob, 
             gender_id, 
             club_id, 
+            avatar,
             salary
+
         ) VALUES (
             :firstname, 
             :nickname, 
             :dob, 
             :gender_id, 
             :club_id, 
+            :avatar,
             :salary
+
         )
         ";
         $stmt = $this->pdo->prepare($sql);
@@ -106,6 +111,7 @@ class Person extends Db {
             persons.dob,
             persons.salary,
             persons.gender_id,
+            persons.avatar,
             persons.club_id
         FROM persons 
 
@@ -126,6 +132,7 @@ class Person extends Db {
             dob = :dob, 
             gender_id = :gender_id, 
             club_id = :club_id, 
+            avatar = :avatar,
             salary = :salary
         WHERE id = :id
         ";
