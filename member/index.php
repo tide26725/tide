@@ -1,4 +1,9 @@
 <?php require $_SERVER["DOCUMENT_ROOT"]."/tide/vendor/autoload.php"; ?>
+<?php
+use app\Model\Ref;
+use app\Model\Club;
+use app\Model\Person;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,6 +25,47 @@
                             <a href="form.php?action=add" class="btn btn-success">เพิ่มสมาชิกใหม่</a>
                         </div>
                         <div class="card-body">
+                            <form action="" class="form-inline mb-3" method="GET">
+                                <div class="input-group mr-2">
+                                    <div class="input-group-perpend">
+                                        <div class="input-group-text">ค้นหา</div>
+                                    </div>
+                                    <input type="text" name="search" id="search" class="form-control" value="<?php echo isset($_REQUEST['search']) ? $_REQUEST['search'] : '';?>">
+                                </div>
+                                <div class="input-group mr-2">
+                                    <div class="input-group-perpend">
+                                        <div class="input-group-text">เพศ</div>
+                                    </div>
+                                    <select name="gender_id" class="form-control" id="">
+                                        <option value="">ทั้งหมด</option>
+                                        <?php 
+                                        $refObj = new Ref;
+                                        $genders = $refObj->getRefsByGroupId(2);
+                                        foreach($genders as $gender) {
+                                            $selected = ($gender['id']==$_REQUEST['gender_id']) ? "selected" : "";
+                                            echo "<option value='{$gender['id']}' {$selected}>{$gender['title']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="input-group mr-2">
+                                    <div class="input-group-perpend">
+                                        <div class="input-group-text">ชมรม</div>
+                                    </div>
+                                    <select name="club_id" id="" class="form-control">
+                                        <option value="">ทั้งหมด</option>
+                                        <?php
+                                        $clubObj = new Club;
+                                        $clubs = $clubObj->getAllClubs();
+                                        foreach($clubs as $club) {
+                                            $selected = ($club['id']==$_REQUEST['club_id']) ? "selected" : "";
+                                            echo "<option value='{$club['id']}' {$selected}>{$club['title']}</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">ตกลง</button>
+                            </form>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -35,11 +81,11 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        use app\Model\Person;
 
                                         $personObj = new Person();
                                         
-                                        $persons = $personObj->getAllPersons();
+                                        $filters = array_intersect_key($_REQUEST, array_flip(['search','gender_id','club_id']));
+                                        $persons = $personObj->getAllPersons($filters);
                                         $n=0;
                                         foreach($persons as $person) {
                                             $n++;

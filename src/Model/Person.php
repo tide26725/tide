@@ -5,7 +5,43 @@ use app\Database\Db;
 
 class Person extends Db {
 
-    public function getAllPersons() {
+    public function getAllPersons($filters=[]) {
+        $where ="";
+
+        //$filters_gender_id = isset($filters['gender_id']) ? $filters['gender_id'] :'';
+        //$filters_club_id = isset($filters['club_id']) ? $filters['club_id'] :'';
+        //$filters_search = isset($filters['search']) ? $filters['search'] :'';
+
+        if(isset($filters['gender_id']) ? $filters['gender_id'] :'') {
+             $where .= " AND persons.gender_id = :gender_id";
+         } else {
+             unset($filters['gender_id']);
+         }
+
+         if(isset($filters['club_id']) ? $filters['club_id'] :'') {
+             $where .= " AND persons.club_id = :club_id";
+         } else {
+             unset($filters['club_id']);
+         }
+
+         if(isset($filters['search']) ? $filters['search'] :'') {
+            $where .= " AND ( 
+				persons.firstname LIKE :search 
+				OR persons.nickname LIKE :search
+			) ";
+			$filters['search'] = "%{$filters['search']}%";
+        } else {
+            unset($filters['search']);
+        }
+
+        // if($filters_search) {
+        //     $where .= "AND (persons.firstname Like :firstname
+        //     OR persons.nickname Like :nickname) ";
+        //     $filters_search = "%{$filters_search}%";
+        // } else {
+        //     unset($filters_search);
+        // }
+
         $sql ="SELECT 
             persons.id,
             persons.firstname,
@@ -17,10 +53,15 @@ class Person extends Db {
         FROM persons 
             LEFT JOIN refs ON persons.gender_id = refs.id
             LEFT JOIN clubs ON persons.club_id = clubs.id
+        WHERE
+            persons.id > 0
+            {$where}
+            
         ORDER BY
             persons.gender_id,
             persons.dob";
-        $stmt = $this->pdo->query($sql);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($filters);
         $data = $stmt->fetchAll();
         return $data;
     }
