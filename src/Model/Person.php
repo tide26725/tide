@@ -140,5 +140,6 @@ class Person extends Db {
         $stmt->execute($person);
         return true;
     }
+
 }
 ?>

@@ -35,6 +35,7 @@ if($_REQUEST['action']=='edit') {
 </head>
 <body>
     <body class="font-mali">
+    <?php require $_SERVER["DOCUMENT_ROOT"] . "/tide/inc/components/navbar.php"; ?>
         <div class="container">
             <div class="row mt-5">
                 <div class="col">
