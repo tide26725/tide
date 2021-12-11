@@ -101,6 +101,7 @@ use app\Model\Person;
                                     $personObj = new Person();
 
                                     $filters = array_intersect_key($_REQUEST, array_flip(['search', 'gender_id', 'club_id']));
+                                    //print_r($filters);
                                     $persons = $personObj->getAllPersons($filters);
                                     $n = 0;
                                     foreach ($persons as $person) {
