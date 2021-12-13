@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+}
+.container {
+  background: rgb(205, 53, 252);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  display: flex;
+  height: 600px;
+  /* flex-direction: row;
+  flex-wrap: wrap; */
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  /* align-content: space-around; */
+
+}
+
+.item {
+  background: rgb(252, 109, 53);
+  font-size: 40px;
+  padding: 30px;
+  margin: 5px;
+  flex: 1;
+}
+
+#i3 {
+  align-self: stretch;
+}
+
+.menu-container {
+  display: flex;
+  height: 50px;
+  background: rgb(89, 10, 235);
+  justify-content: flex-end;
+}
+
+.menu-container>a {
+  padding: 10px;
+  margin: 0 5px;
+  background: rgb(89, 10, 235);
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+}
+
+.menu-container>a:hover {
+  background: rgb(79, 142, 224);
+}
+
+.login-container {
+  background: rgb(170, 169, 173);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box {
+  background: rgb(86, 86, 87);
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 24px;
+}
+
+.login-box input {
+  width: 100%;
+  font-size: 24px;
+}
+
+.login-box .form-row {
+  margin: 10px 0;
+}
+
+.login-box button {
+  font-size: 30px;
+  padding: 10px;
+  background: rgb(36, 235, 10);
+  border-radius: 10px;
+}
+
+.news-container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.news-container img {
+  width: 100%;
+}
+
+.news-column {
+  margin: 0 10px;
+  flex: 1;
+}
+
+#news2 {
+  flex: 2;
+}
+
+@media all and (max-width: 700px){
+  .news-container {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+}
